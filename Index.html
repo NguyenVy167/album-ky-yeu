@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Album Kỷ Yếu Tân Cử Nhân - Memory Vault 🎓</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coffee: {
+                            50: '#FDFBF7',
+                            100: '#F7EFE5',
+                            200: '#E8D5C4',
+                            500: '#C19A6B',
+                            700: '#7B5232',
+                            900: '#3E2723',
+                        },
+                        rose: {
+                            100: '#FCE7F0',
+                            300: '#F472B6',
+                            500: '#E83E8C',
+                        },
+                        amber: {
+                            400: '#FBBF24',
+                            500: '#F59E0B',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        cursive: ['"Dancing Script"', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(247, 239, 229, 0.9);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #F7EFE5; }
+        ::-webkit-scrollbar-thumb { background: #C19A6B; border-radius: 4px; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float { animation: float 3.5s ease-in-out infinite; }
+    </style>
+</head>
+<body class="bg-coffee-50 text-coffee-900 font-sans antialiased min-h-screen selection:bg-rose-100 selection:text-coffee-900 flex flex-col">
+
+    <!-- Canvas Confetti Overlay -->
+    <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 glass-card border-b border-coffee-200/60 shadow-sm px-4 py-3">
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-coffee-700 to-rose-500 text-white flex items-center justify-center font-bold text-xl shadow-md">
+                    🎓
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg md:text-xl text-coffee-900 leading-tight">Album Kỷ Yếu Tân Cử Nhân ✨</h1>
+                    <p class="text-xs text-coffee-500">Lưu giữ khoảnh khắc từ Điện thoại & Laptop</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 flex-wrap">
+                <button onclick="openUploadModal()" class="px-3.5 py-2 text-xs md:text-sm font-bold bg-coffee-700 hover:bg-coffee-900 text-white rounded-xl shadow transition transform active:scale-95 flex items-center gap-1.5">
+                    <span>➕ Tải Ảnh Lên</span>
+                </button>
+                <button onclick="startSlideshow()" class="px-3.5 py-2 text-xs md:text-sm font-bold bg-rose-500 hover:bg-rose-600 text-white rounded-xl shadow transition transform active:scale-95 flex items-center gap-1.5">
+                    <span>🎬 Xem Trình Chiếu</span>
+                </button>
+                <button onclick="shareEntireAlbum()" class="px-3.5 py-2 text-xs md:text-sm font-bold bg-amber-500 hover:bg-amber-600 text-white rounded-xl shadow transition transform active:scale-95 flex items-center gap-1.5">
+                    <span>📤 Chia Sẻ Album</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-6 flex-grow w-full space-y-8">
+
+        <!-- Hero Welcome Banner -->
+        <section class="glass-card rounded-3xl p-6 md:p-8 relative overflow-hidden border border-coffee-200/80 shadow-sm bg-gradient-to-br from-white via-coffee-50 to-rose-50/30">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+                <div class="space-y-3 text-center md:text-left max-w-xl">
+                    <span class="inline-block px-3 py-1 rounded-full bg-rose-100 text-rose-600 text-xs font-bold uppercase tracking-wider">
+                        ✨ Góc Lưu Giữ Kỷ Niệm Độc Quyền
+                    </span>
+                    <h2 class="text-2xl md:text-4xl font-extrabold text-coffee-900 leading-tight">
+                        Chúc Mừng <span class="text-transparent bg-clip-text bg-gradient-to-r from-coffee-700 via-rose-500 to-amber-600 font-cursive text-3xl md:text-5xl">Tân Cử Nhân!</span>
+                    </h2>
+                    <p class="text-xs md:text-sm text-coffee-700 leading-relaxed">
+                        Nơi bạn có thể tự do đăng tải những bức ảnh lễ tốt nghiệp rạng rỡ nhất, khoảnh khắc kỷ niệm bên bạn bè, gia đình và thầy cô từ điện thoại và laptop. Ảnh sẽ được tự động lưu trữ an toàn trong máy của bạn!
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-1 justify-center md:justify-start text-xs font-medium text-coffee-700">
+                        <span class="bg-coffee-100 px-2.5 py-1 rounded-lg">📱 Tải từ điện thoại</span>
+                        <span class="bg-coffee-100 px-2.5 py-1 rounded-lg">💻 Tải từ laptop</span>
+                        <span class="bg-coffee-100 px-2.5 py-1 rounded-lg">⚡ Tải ảnh về máy 1-click</span>
+                    </div>
+                </div>
+
+                <!-- Cartoon Graphic Banner -->
+                <div class="relative shrink-0 w-44 h-44 md:w-52 md:h-52 animate-float">
+                    <div class="absolute inset-0 bg-rose-200/50 rounded-full blur-xl"></div>
+                    <div class="relative bg-white p-3 rounded-full border-4 border-coffee-200 shadow-md w-full h-full flex items-center justify-center overflow-hidden">
+                        <svg viewBox="0 0 200 200" class="w-full h-full">
+                            <path d="M 40,90 Q 30,160 55,180 Q 100,190 145,180 Q 170,160 160,90 Z" fill="#3D2314" />
+                            <ellipse cx="100" cy="105" rx="45" ry="48" fill="#FDE2E4" />
+                            <path d="M 55,85 Q 80,65 100,85 Q 120,65 145,85 Q 130,55 100,55 Q 70,55 55,85 Z" fill="#3D2314" />
+                            <path d="M 75,100 Q 85,92 92,100" stroke="#2B1810" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                            <path d="M 108,100 Q 115,92 125,100" stroke="#2B1810" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                            <ellipse cx="72" cy="110" rx="8" ry="5" fill="#FFB5A7" opacity="0.7"/>
+                            <ellipse cx="128" cy="110" rx="8" ry="5" fill="#FFB5A7" opacity="0.7"/>
+                            <path d="M 90,118 Q 100,128 110,118" stroke="#D65A31" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <path d="M 50,60 L 100,35 L 150,60 L 100,75 Z" fill="#2B2B2B" />
+                            <rect x="92" y="30" width="16" height="10" fill="#3D3D3D" rx="2" />
+                            <path d="M 100,55 Q 135,60 138,80" stroke="#FFD700" stroke-width="2.5" fill="none" />
+                            <circle cx="138" cy="82" r="3" fill="#FFD700" />
+                            <text x="25" y="65" font-size="16">📸</text>
+                            <text x="155" y="75" font-size="16">💐</text>
+                            <text x="150" y="140" font-size="16">✨</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category Filter Tabs & Statistics -->
+        <section class="space-y-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div class="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 w-full sm:w-auto no-scrollbar">
+                    <button onclick="filterCategory('all')" id="tab-all" class="category-tab px-4 py-2 rounded-xl text-xs md:text-sm font-bold bg-coffee-700 text-white shadow-sm transition whitespace-nowrap shrink-0">
+                        🖼️ Tất Cả Ảnh (<span id="count-all">0</span>)
+                    </button>
+                    <button onclick="filterCategory('grad')" id="tab-grad" class="category-tab px-4 py-2 rounded-xl text-xs md:text-sm font-bold bg-white text-coffee-700 hover:bg-coffee-100 transition whitespace-nowrap shrink-0 border border-coffee-200">
+                        🎓 Lễ Trao Bằng (<span id="count-grad">0</span>)
+                    </button>
+                    <button onclick="filterCategory('friends')" id="tab-friends" class="category-tab px-4 py-2 rounded-xl text-xs md:text-sm font-bold bg-white text-coffee-700 hover:bg-coffee-100 transition whitespace-nowrap shrink-0 border border-coffee-200">
+                        👥 Bạn Bè & Thầy Cô (<span id="count-friends">0</span>)
+                    </button>
+                    <button onclick="filterCategory('wishes')" id="tab-wishes" class="category-tab px-4 py-2 rounded-xl text-xs md:text-sm font-bold bg-white text-coffee-700 hover:bg-coffee-100 transition whitespace-nowrap shrink-0 border border-coffee-200">
+                        💌 Lời Chúc & Kỷ Niệm (<span id="count-wishes">0</span>)
+                    </button>
+                </div>
+
+                <div class="text-xs text-coffee-500 font-medium shrink-0 self-end sm:self-center">
+                    Lưu trữ trong máy: <span id="storageInfo" class="font-bold text-coffee-700">0 MB</span>
+                </div>
+            </div>
+
+            <!-- Upload Dropzone (When Empty or Quick Add) -->
+            <div id="dropzone" onclick="openUploadModal()" class="border-2 border-dashed border-coffee-300 hover:border-rose-400 bg-white/60 rounded-3xl p-6 text-center cursor-pointer transition group hover:bg-rose-50/30">
+                <div class="max-w-xs mx-auto space-y-2">
+                    <div class="w-12 h-12 mx-auto bg-rose-100 group-hover:bg-rose-200 text-rose-500 rounded-full flex items-center justify-center text-2xl transition transform group-hover:scale-110">
+                        📥
+                    </div>
+                    <h3 class="font-bold text-coffee-900 text-sm">Thêm Kỷ Niệm Mới</h3>
+                    <p class="text-xs text-coffee-500">Kéo thả ảnh hoặc chạm vào đây để chọn tệp từ Điện thoại / Laptop</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery Grid -->
+        <section id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <!-- Dynamic Photos Rendered Here -->
+        </section>
+
+        <!-- Empty State Disclaimer -->
+        <div id="emptyState" class="hidden text-center py-12 space-y-3 glass-card rounded-3xl border border-coffee-200">
+            <div class="text-4xl">📸</div>
+            <h3 class="font-bold text-coffee-900 text-base">Chưa có ảnh nào trong mục này</h3>
+            <p class="text-xs text-coffee-600 max-w-sm mx-auto">Hãy bấm nút "Tải Ảnh Lên" phía trên để lưu giữ lại những tấm hình rạng rỡ nhất của bạn nhé!</p>
+            <button onclick="openUploadModal()" class="px-4 py-2 text-xs font-bold bg-coffee-700 text-white rounded-xl shadow hover:bg-coffee-900 transition">
+                Tải Ảnh Ngay
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-xs text-coffee-500 border-t border-coffee-200/60 mt-8 bg-white/50">
+        <p>Graduation Memory Vault • Thiết kế riêng mừng Tân Cử Nhân 🎓✨</p>
+    </footer>
+
+    <!-- MODAL 1: UPLOAD PHOTO MODAL -->
+    <div id="uploadModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-coffee-200 relative animate-fade-in max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-coffee-100 pb-3">
+                <h3 class="font-bold text-coffee-900 text-base flex items-center gap-2">
+                    <span>📱</span> Tải Ảnh Từ Điện Thoại / Laptop
+                </h3>
+                <button onclick="closeUploadModal()" class="text-gray-400 hover:text-gray-600 text-xl font-bold px-2">&times;</button>
+            </div>
+
+            <form id="uploadForm" onsubmit="handleUploadSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-coffee-700 uppercase mb-1">1. Chọn Ảnh:</label>
+                    <input type="file" id="fileInput" accept="image/*" multiple required onchange="previewSelectedFiles(this)"
+                           class="w-full text-xs text-coffee-700 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-rose-100 file:text-rose-600 hover:file:bg-rose-200 cursor-pointer">
+                    <div id="imagePreviewContainer" class="grid grid-cols-3 gap-2 mt-3 max-h-36 overflow-y-auto"></div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-coffee-700 uppercase mb-1">2. Phân Loại Album:</label>
+                    <select id="photoCategory" class="w-full text-xs p-2.5 rounded-xl border border-coffee-200 bg-coffee-50 font-medium text-coffee-900 focus:outline-none focus:ring-2 focus:ring-coffee-500">
+                        <option value="grad">🎓 Lễ Trao Bằng & Cử Nhân</option>
+                        <option value="friends">👥 Bạn Bè & Thầy Cô</option>
+                        <option value="wishes">💌 Lời Chúc & Kỷ Niệm</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-coffee-700 uppercase mb-1">3. Chú Thích / Cảm Xúc:</label>
+                    <textarea id="photoCaption" rows="2" placeholder="Nhập kỷ niệm, cảm xúc ngắn cho bức ảnh này..."
+                              class="w-full text-xs p-2.5 rounded-xl border border-coffee-200 bg-coffee-50 text-coffee-900 focus:outline-none focus:ring-2 focus:ring-coffee-500"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2 border-t border-coffee-100">
+                    <button type="button" onclick="closeUploadModal()" class="px-4 py-2 text-xs font-semibold text-coffee-700 bg-coffee-100 hover:bg-coffee-200 rounded-xl transition">
+                        Hủy
+                    </button>
+                    <button type="submit" id="submitBtn" class="px-5 py-2 text-xs font-bold text-white bg-coffee-700 hover:bg-coffee-900 rounded-xl shadow transition">
+                        Lưu Kỷ Niệm
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: PHOTO INSPECTOR & DOWNLOAD MODAL -->
+    <div id="inspectorModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-5 shadow-2xl space-y-4 border border-coffee-200 relative max-h-[95vh] flex flex-col">
+            <div class="flex justify-between items-center border-b border-coffee-100 pb-2 shrink-0">
+                <span id="inspectorCategoryTag" class="text-[10px] font-bold uppercase tracking-wider bg-rose-100 text-rose-600 px-2.5 py-1 rounded-full">
+                    Kỷ niệm
+                </span>
+                <div class="flex items-center gap-2">
+                    <button onclick="openShareModal(inspectedPhotoId)" class="px-3 py-1.5 text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white rounded-xl shadow flex items-center gap-1 transition">
+                        📤 Chia Sẻ
+                    </button>
+                    <button onclick="downloadCurrentPhoto()" class="px-3 py-1.5 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow flex items-center gap-1 transition">
+                        📥 Tải Về Máy
+                    </button>
+                    <button onclick="deleteCurrentPhoto()" class="px-3 py-1.5 text-xs font-bold bg-rose-100 hover:bg-rose-200 text-rose-600 rounded-xl transition">
+                        🗑️ Xóa
+                    </button>
+                    <button onclick="closeInspectorModal()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold px-2">&times;</button>
+                </div>
+            </div>
+
+            <div class="flex-grow overflow-hidden flex items-center justify-center bg-black/5 rounded-2xl p-2 min-h-[250px]">
+                <img id="inspectorImage" src="" alt="Photo detail" class="max-h-[60vh] max-w-full object-contain rounded-xl shadow-md">
+            </div>
+
+            <div class="shrink-0 space-y-2">
+                <p id="inspectorCaption" class="text-xs md:text-sm text-coffee-800 font-medium italic bg-coffee-50 p-3 rounded-xl border border-coffee-100"></p>
+                <div class="flex justify-between items-center text-[11px] text-coffee-500">
+                    <span id="inspectorDate"></span>
+                    <span id="inspectorSize"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: SHARE & GRADUATION FRAME POSTCARD MODAL -->
+    <div id="shareModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-5 md:p-6 shadow-2xl space-y-4 border border-coffee-200 relative max-h-[92vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-coffee-100 pb-3">
+                <h3 class="font-bold text-coffee-900 text-base flex items-center gap-2">
+                    <span>📤</span> Chia Sẻ Kỷ Niệm Tân Cử Nhân
+                </h3>
+                <button onclick="closeShareModal()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold px-2">&times;</button>
+            </div>
+
+            <!-- Tab selection for share modes -->
+            <div class="flex border-b border-coffee-100 gap-2 pb-2 text-xs font-bold">
+                <button onclick="switchShareTab('frame')" id="shareTab-frame" class="px-3 py-1.5 rounded-lg bg-coffee-700 text-white">🎨 Tạo Khung Ảnh Kỷ Niệm</button>
+                <button onclick="switchShareTab('social')" id="shareTab-social" class="px-3 py-1.5 rounded-lg bg-coffee-100 text-coffee-700">📲 Chia Sẻ Mạng Xã Hội</button>
+            </div>
+
+            <!-- TAB 1: FRAME / POSTCARD PREVIEW -->
+            <div id="shareContent-frame" class="space-y-3">
+                <p class="text-xs text-coffee-600">Tự động gắn khung ảnh "Chúc Mừng Tân Cử Nhân" sang trọng để chia sẻ lên Facebook/Zalo Story:</p>
+                <div class="bg-coffee-50 p-2 rounded-2xl border border-coffee-200 flex items-center justify-center min-h-[220px]">
+                    <canvas id="postcardCanvas" class="max-w-full max-h-[320px] rounded-xl shadow-md border border-white"></canvas>
+                </div>
+                <div class="flex flex-wrap gap-2 justify-end pt-1">
+                    <button onclick="downloadPostcardFrame()" class="px-3.5 py-2 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow transition flex items-center gap-1.5">
+                        💾 Tải Khung Ảnh
+                    </button>
+                    <button onclick="shareNativePostcard()" class="px-3.5 py-2 text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white rounded-xl shadow transition flex items-center gap-1.5">
+                        📲 Chia Sẻ Trực Tiếp
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 2: SOCIAL SHORTCUTS & TEXT COPY -->
+            <div id="shareContent-social" class="hidden space-y-4">
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-coffee-700 uppercase">1. Lời Chúc / Chú Thích Kỷ Niệm:</label>
+                    <div class="relative">
+                        <textarea id="shareTextPreview" rows="3" readonly class="w-full text-xs p-2.5 bg-coffee-50 rounded-xl border border-coffee-200 text-coffee-800 font-medium"></textarea>
+                        <button onclick="copyShareText()" class="absolute top-2 right-2 px-2.5 py-1 text-[11px] font-bold bg-rose-500 hover:bg-rose-600 text-white rounded-lg shadow transition">
+                            📋 Sao chép
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-coffee-700 uppercase">2. Chọn Mạng Xã Hội Để Chia Sẻ:</label>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        <button onclick="shareToZalo()" class="p-2.5 rounded-xl border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold flex items-center justify-center gap-2 transition">
+                            <span>💬</span> Zalo
+                        </button>
+                        <button onclick="shareToFacebook()" class="p-2.5 rounded-xl border border-indigo-200 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center gap-2 transition">
+                            <span>📘</span> Facebook
+                        </button>
+                        <button onclick="shareToMessenger()" class="p-2.5 rounded-xl border border-purple-200 bg-purple-50 hover:bg-purple-100 text-purple-700 text-xs font-bold flex items-center justify-center gap-2 transition">
+                            <span>⚡</span> Messenger
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION OVERLAY -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-coffee-900 text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2 pointer-events-none">
+        <span id="toastIcon">✨</span>
+        <span id="toastMessage">Thông báo</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC WITH INDEXEDDB PERSISTENCE -->
+    <script>
+        // State management
+        let db = null;
+        let photosList = [];
+        let currentFilter = 'all';
+        let inspectedPhotoId = null;
+        let slideshowIndex = 0;
+        let slideshowInterval = null;
+        let isSlideshowPlaying = false;
+        let currentSharingPhoto = null;
+
+        // Web Audio API Synthesizer for interactive UI sound effects
+        let audioCtx = null;
+        function playSound(type = 'click') {
+            try {
+                if (!audioCtx) {
+                    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContextClass) {
+                        audioCtx = new AudioContextClass();
+                    }
+                }
+                if (!audioCtx) return;
+                
+                // Unmute or resume if suspended by browser policy
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+
+                if (type === 'sparkle') {
+                    // Upward chime synth
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.exponentialRampToValueAtTime(1046.50, now + 0.15); // C6
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                } else {
+                    // Gentle soft click synth
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(350, now);
+                    osc.frequency.exponentialRampToValueAtTime(100, now + 0.04);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+                    osc.start(now);
+                    osc.stop(now + 0.04);
+                }
+            } catch (e) {
+                // Silently ignore if blocked by policy
+            }
+        }
+
+        function showToast(msg, icon = '✨') {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = msg;
+            document.getElementById('toastIcon').innerText = icon;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function openShareModal(photoId) {
+            playSound('click');
+            const photo = photosList.find(p => p.id === photoId);
+            if (!photo) return;
+
+            currentSharingPhoto = photo;
+            document.getElementById('shareTextPreview').value = `🎓 [Kỷ Yếu Tân Cử Nhân] - ${photo.caption || 'Khoảnh khắc lễ trao bằng đáng nhớ!'}\n✨ Lưu giữ kỷ niệm thời sinh viên rạng rỡ.`;
+
+            document.getElementById('shareModal').classList.remove('hidden');
+            switchShareTab('frame');
+            generatePostcardFrame(photo);
+        }
+
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.add('hidden');
+            currentSharingPhoto = null;
+        }
+
+        function switchShareTab(tab) {
+            playSound('click');
+            const frameTab = document.getElementById('shareTab-frame');
+            const socialTab = document.getElementById('shareTab-social');
+            const frameContent = document.getElementById('shareContent-frame');
+            const socialContent = document.getElementById('shareContent-social');
+
+            if (tab === 'frame') {
+                frameTab.className = "px-3 py-1.5 rounded-lg bg-coffee-700 text-white";
+                socialTab.className = "px-3 py-1.5 rounded-lg bg-coffee-100 text-coffee-700";
+                frameContent.classList.remove('hidden');
+                socialContent.classList.add('hidden');
+            } else {
+                socialTab.className = "px-3 py-1.5 rounded-lg bg-coffee-700 text-white";
+                frameTab.className = "px-3 py-1.5 rounded-lg bg-coffee-100 text-coffee-700";
+                socialContent.classList.remove('hidden');
+                frameContent.classList.add('hidden');
+            }
+        }
+
+        function generatePostcardFrame(photo) {
+            const canvas = document.getElementById('postcardCanvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = 800;
+            canvas.height = 1000;
+
+            // Background Outer Frame Gradient
+            const bgGrad = ctx.createLinearGradient(0, 0, 800, 1000);
+            bgGrad.addColorStop(0, '#3E2723');
+            bgGrad.addColorStop(0.5, '#7B5232');
+            bgGrad.addColorStop(1, '#C19A6B');
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, 800, 1000);
+
+            // Inner Decorative Board
+            ctx.fillStyle = '#FDFBF7';
+            ctx.roundRect(30, 30, 740, 940, 24);
+            ctx.fill();
+
+            // Gold Inner Border Line
+            ctx.strokeStyle = '#D4AF37';
+            ctx.lineWidth = 4;
+            ctx.roundRect(42, 42, 716, 916, 18);
+            ctx.stroke();
+
+            // Header Text: Graduation Title
+            ctx.fillStyle = '#3E2723';
+            ctx.font = 'bold 32px "Plus Jakarta Sans", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('🎓 KỶ YẾU TÂN CỬ NHÂN 🎓', 400, 100);
+
+            ctx.fillStyle = '#E83E8C';
+            ctx.font = 'italic 20px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText('✨ Khoảnh Khắc Lễ Trao Bằng Đáng Nhớ ✨', 400, 135);
+
+            // Load and draw photo centered inside frame
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => {
+                const maxW = 680;
+                const maxH = 580;
+                let drawW = img.width;
+                let drawH = img.height;
+
+                const ratio = Math.min(maxW / drawW, maxH / drawH);
+                drawW *= ratio;
+                drawH *= ratio;
+
+                const drawX = 400 - drawW / 2;
+                const drawY = 460 - drawH / 2;
+
+                // Photo Shadow
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
+                ctx.shadowBlur = 15;
+                ctx.shadowOffsetY = 8;
+
+                // Photo White Matting Background
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(drawX - 10, drawY - 10, drawW + 20, drawH + 20);
+                
+                ctx.shadowColor = 'transparent';
+
+                // Draw Photo
+                ctx.drawImage(img, drawX, drawY, drawW, drawH);
+
+                // Caption Box at bottom
+                const capY = 780;
+                ctx.fillStyle = '#F7EFE5';
+                ctx.roundRect(80, capY, 640, 120, 16);
+                ctx.fill();
+
+                ctx.fillStyle = '#3E2723';
+                ctx.font = 'bold 20px "Plus Jakarta Sans", sans-serif';
+                ctx.textAlign = 'center';
+                
+                const captionText = photo.caption ? `"${photo.caption}"` : '"Tự hào hành trình cử nhân!"';
+                ctx.fillText(captionText, 400, capY + 50, 600);
+
+                ctx.fillStyle = '#7B5232';
+                ctx.font = '14px "Plus Jakarta Sans", sans-serif';
+                ctx.fillText(`📅 Ngày lưu giữ: ${new Date(photo.timestamp).toLocaleDateString('vi-VN')}`, 400, capY + 85);
+
+                // Footer Watermark
+                ctx.fillStyle = '#C19A6B';
+                ctx.font = 'bold 16px "Plus Jakarta Sans", sans-serif';
+                ctx.fillText('Memory Vault • Album Kỷ Yếu Tân Cử Nhân', 400, 940);
+            };
+            img.src = photo.dataUrl;
+        }
+
+        function downloadPostcardFrame() {
+            playSound('sparkle');
+            const canvas = document.getElementById('postcardCanvas');
+            const a = document.createElement('a');
+            a.href = canvas.toDataURL('image/png');
+            a.download = `Khung_Ky_Yeu_Tan_Cu_Nhan_${Date.now()}.png`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            showToast('Đã tải khung ảnh kỷ niệm về máy!', '💾');
+        }
+
+        async function shareNativePostcard() {
+            playSound('sparkle');
+            const canvas = document.getElementById('postcardCanvas');
+            
+            canvas.toBlob(async (blob) => {
+                if (!blob) return;
+                const file = new File([blob], `Khung_Ky_Yeu_${Date.now()}.png`, { type: 'image/png' });
+
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    try {
+                        await navigator.share({
+                            files: [file],
+                            title: 'Album Kỷ Yếu Tân Cử Nhân 🎓',
+                            text: currentSharingPhoto?.caption || 'Chúc Mừng Tân Cử Nhân!'
+                        });
+                        showToast('Đã chia sẻ thành công!', '🎉');
+                    } catch (err) {
+                        if (err.name !== 'AbortError') {
+                            showToast('Không thể mở trình chia sẻ hệ thống.', '⚠️');
+                        }
+                    }
+                } else {
+                    downloadPostcardFrame();
+                    showToast('Đã tải ảnh về máy để bạn đính kèm chia sẻ!', '📥');
+                }
+            });
+        }
+
+        function shareEntireAlbum() {
+            playSound('sparkle');
+            if (photosList.length === 0) {
+                showToast('Hãy tải thêm ảnh để chia sẻ album nhé!', '📸');
+                return;
+            }
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Album Kỷ Yếu Tân Cử Nhân 🎓',
+                    text: `Xem ngay album kỷ yếu gồm ${photosList.length} khoảnh khắc đáng nhớ của Tân Cử Nhân! ✨`,
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                copyShareTextCustom(`🎓 Album Kỷ Yếu Tân Cử Nhân ✨\nNơi lưu giữ ${photosList.length} khoảnh khắc tốt nghiệp rạng rỡ nhất!`);
+            }
+        }
+
+        function copyShareText() {
+            const text = document.getElementById('shareTextPreview').value;
+            copyShareTextCustom(text);
+        }
+
+        function copyShareTextCustom(text) {
+            playSound('click');
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text);
+            } else {
+                const area = document.createElement('textarea');
+                area.value = text;
+                document.body.appendChild(area);
+                area.select();
+                document.execCommand('copy');
+                document.body.removeChild(area);
+            }
+            showToast('Đã sao chép lời chúc vào khay nhớ tạm!', '📋');
+        }
+
+        function shareToZalo() {
+            playSound('click');
+            copyShareText();
+            window.open('https://zalo.me', '_blank');
+            showToast('Đã chép lời chúc, bạn chỉ cần Dán (Paste) vào Zalo!', '💬');
+        }
+
+        function shareToFacebook() {
+            playSound('click');
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function shareToMessenger() {
+            playSound('click');
+            copyShareText();
+            window.open('https://www.messenger.com', '_blank');
+            showToast('Đã chép lời chúc, hãy dán vào Messenger nhé!', '⚡');
+        }
+
+        // Open IndexedDB to store full binary image blobs persistent across mobile/desktop reloads
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open('GraduationMemoryDB', 1);
+                request.onupgradeneeded = (e) => {
+                    db = e.target.result;
+                    if (!db.objectStoreNames.contains('photos')) {
+                        const store = db.createObjectStore('photos', { keyPath: 'id' });
+                        store.createIndex('category', 'category', { unique: false });
+                        store.createIndex('timestamp', 'timestamp', { unique: false });
+                    }
+                };
+                request.onsuccess = (e) => {
+                    db = e.target.result;
+                    resolve(db);
+                };
+                request.onerror = (e) => reject(e);
+            });
+        }
+
+        // Fetch all photos from IndexedDB
+        async function loadPhotosFromDB() {
+            if (!db) await initDB();
+            return new Promise((resolve) => {
+                const tx = db.transaction('photos', 'readonly');
+                const store = tx.objectStore('photos');
+                const request = store.getAll();
+                request.onsuccess = () => {
+                    photosList = request.result || [];
+                    // Sort by timestamp desc
+                    photosList.sort((a, b) => b.timestamp - a.timestamp);
+                    resolve(photosList);
+                };
+            });
+        }
+
+        // Save a photo record into IndexedDB
+        async function savePhotoToDB(photoObj) {
+            if (!db) await initDB();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction('photos', 'readwrite');
+                const store = tx.objectStore('photos');
+                const request = store.add(photoObj);
+                request.onsuccess = () => resolve();
+                request.onerror = (e) => reject(e);
+            });
+        }
+
+        // Delete photo from IndexedDB
+        async function deletePhotoFromDB(id) {
+            if (!db) await initDB();
+            return new Promise((resolve) => {
+                const tx = db.transaction('photos', 'readwrite');
+                const store = tx.objectStore('photos');
+                const request = store.delete(id);
+                request.onsuccess = () => resolve();
+            });
+        }
+
+        // Render photo gallery
+        async function refreshGallery() {
+            await loadPhotosFromDB();
+            updateCountsAndStorage();
+
+            const grid = document.getElementById('galleryGrid');
+            const emptyState = document.getElementById('emptyState');
+            grid.innerHTML = '';
+
+            const filtered = currentFilter === 'all' 
+                ? photosList 
+                : photosList.filter(p => p.category === currentFilter);
+
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            filtered.forEach(photo => {
+                const card = document.createElement('div');
+                card.className = "glass-card rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition duration-300 border border-coffee-200 flex flex-col group cursor-pointer relative";
+                
+                const catLabel = getCategoryLabel(photo.category);
+                
+                card.innerHTML = `
+                    <div class="relative w-full h-48 bg-coffee-100 overflow-hidden" onclick="openInspector('${photo.id}')">
+                        <img src="${photo.dataUrl}" alt="Memory" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-black/60 text-white px-2 py-0.5 rounded-full backdrop-blur-sm">
+                            ${catLabel}
+                        </span>
+                    </div>
+                    <div class="p-3 flex-grow flex flex-col justify-between space-y-2" onclick="openInspector('${photo.id}')">
+                        <p class="text-xs text-coffee-900 font-medium line-clamp-2">${escapeHtml(photo.caption || 'Kỷ niệm đẹp tốt nghiệp ✨')}</p>
+                        <div class="flex justify-between items-center text-[10px] text-coffee-500 pt-1 border-t border-coffee-100">
+                            <span>${new Date(photo.timestamp).toLocaleDateString('vi-VN')}</span>
+                            <span class="text-rose-500 font-bold group-hover:underline">Xem & Tải về 📥</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function getCategoryLabel(cat) {
+            switch(cat) {
+                case 'grad': return '🎓 Trao Bằng';
+                case 'friends': return '👥 Bạn Bè';
+                case 'wishes': return '💌 Kỷ Niệm';
+                default: return '✨ Kỷ niệm';
+            }
+        }
+
+        function updateCountsAndStorage() {
+            document.getElementById('count-all').innerText = photosList.length;
+            document.getElementById('count-grad').innerText = photosList.filter(p => p.category === 'grad').length;
+            document.getElementById('count-friends').innerText = photosList.filter(p => p.category === 'friends').length;
+            document.getElementById('count-wishes').innerText = photosList.filter(p => p.category === 'wishes').length;
+
+            // Calculate total size in MB
+            let totalBytes = 0;
+            photosList.forEach(p => {
+                totalBytes += p.dataUrl.length;
+            });
+            const totalMB = (totalBytes / (1024 * 1024)).toFixed(1);
+            document.getElementById('storageInfo').innerText = totalMB + ' MB';
+        }
+
+        function filterCategory(cat) {
+            playSound('click');
+            currentFilter = cat;
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('bg-coffee-700', 'text-white');
+                tab.classList.add('bg-white', 'text-coffee-700');
+            });
+
+            const activeTab = document.getElementById(`tab-${cat}`);
+            if (activeTab) {
+                activeTab.classList.remove('bg-white', 'text-coffee-700');
+                activeTab.classList.add('bg-coffee-700', 'text-white');
+            }
+
+            refreshGallery();
+        }
+
+        function openUploadModal() {
+            playSound('click');
+            document.getElementById('uploadModal').classList.remove('hidden');
+        }
+
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.add('hidden');
+            document.getElementById('uploadForm').reset();
+            document.getElementById('imagePreviewContainer').innerHTML = '';
+        }
+
+        function previewSelectedFiles(input) {
+            const container = document.getElementById('imagePreviewContainer');
+            container.innerHTML = '';
+            if (input.files) {
+                Array.from(input.files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = "w-full h-16 object-cover rounded-lg border border-coffee-200 shadow-sm";
+                        container.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+
+        async function handleUploadSubmit(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('fileInput');
+            const category = document.getElementById('photoCategory').value;
+            const caption = document.getElementById('photoCaption').value;
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (!fileInput.files || fileInput.files.length === 0) return;
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Đang lưu...';
+
+            for (let i = 0; i < fileInput.files.length; i++) {
+                const file = fileInput.files[i];
+                const dataUrl = await readFileAsDataURL(file);
+                
+                const newPhoto = {
+                    id: 'photo_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                    dataUrl: dataUrl,
+                    category: category,
+                    caption: caption || `Hình ảnh kỷ niệm ${file.name}`,
+                    timestamp: Date.now(),
+                    filename: file.name,
+                    sizeKB: Math.round(file.size / 1024)
+                };
+
+                await savePhotoToDB(newPhoto);
+            }
+
+            playSound('sparkle');
+            triggerConfetti();
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Lưu Kỷ Niệm';
+            closeUploadModal();
+            refreshGallery();
+        }
+
+        function readFileAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function openInspector(id) {
+            playSound('click');
+            const photo = photosList.find(p => p.id === id);
+            if (!photo) return;
+
+            inspectedPhotoId = id;
+            document.getElementById('inspectorImage').src = photo.dataUrl;
+            document.getElementById('inspectorCaption').innerText = photo.caption || 'Không có chú thích.';
+            document.getElementById('inspectorCategoryTag').innerText = getCategoryLabel(photo.category);
+            document.getElementById('inspectorDate').innerText = '📅 Ngày tạo: ' + new Date(photo.timestamp).toLocaleString('vi-VN');
+            document.getElementById('inspectorSize').innerText = '💾 Dung lượng: ~' + (photo.sizeKB || 0) + ' KB';
+
+            document.getElementById('inspectorModal').classList.remove('hidden');
+        }
+
+        function closeInspectorModal() {
+            document.getElementById('inspectorModal').classList.add('hidden');
+            inspectedPhotoId = null;
+        }
+
+        function downloadCurrentPhoto() {
+            if (!inspectedPhotoId) return;
+            const photo = photosList.find(p => p.id === inspectedPhotoId);
+            if (!photo) return;
+
+            playSound('sparkle');
+            const a = document.createElement('a');
+            a.href = photo.dataUrl;
+            a.download = photo.filename || `Graduation_Memory_${Date.now()}.png`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        async function deleteCurrentPhoto() {
+            if (!inspectedPhotoId) return;
+            playSound('click');
+            await deletePhotoFromDB(inspectedPhotoId);
+            closeInspectorModal();
+            refreshGallery();
+        }
+
+        function startSlideshow() {
+            if (photosList.length === 0) {
+                openUploadModal();
+                return;
+            }
+            playSound('sparkle');
+            slideshowIndex = 0;
+            isSlideshowPlaying = true;
+            document.getElementById('slideshowModal').classList.remove('hidden');
+            renderSlide();
+
+            slideshowInterval = setInterval(() => {
+                if (isSlideshowPlaying) {
+                    nextSlide();
+                }
+            }, 3500);
+        }
+
+        function closeSlideshow() {
+            document.getElementById('slideshowModal').classList.add('hidden');
+            if (slideshowInterval) clearInterval(slideshowInterval);
+        }
+
+        function renderSlide() {
+            if (photosList.length === 0) return;
+            const photo = photosList[slideshowIndex];
+            document.getElementById('slideshowImage').src = photo.dataUrl;
+            document.getElementById('slideshowCaption').innerText = photo.caption || getCategoryLabel(photo.category);
+            document.getElementById('slideshowCounter').innerText = `${slideshowIndex + 1} / ${photosList.length}`;
+        }
+
+        function nextSlide() {
+            slideshowIndex = (slideshowIndex + 1) % photosList.length;
+            renderSlide();
+        }
+
+        function prevSlide() {
+            slideshowIndex = (slideshowIndex - 1 + photosList.length) % photosList.length;
+            renderSlide();
+        }
+
+        function toggleSlideshowPlay() {
+            isSlideshowPlaying = !isSlideshowPlaying;
+            document.getElementById('playPauseBtn').innerText = isSlideshowPlaying ? '⏸️' : '▶️';
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        function triggerConfetti() {
+            const canvas = document.getElementById('confettiCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#C19A6B', '#E83E8C', '#FFD700', '#F7EFE5', '#7B5232'];
+
+            for (let i = 0; i < 80; i++) {
+                particles.push({
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
+                    vx: (Math.random() - 0.5) * 14,
+                    vy: (Math.random() - 0.7) * 16,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: Math.random() * 6 + 4,
+                    life: 110
+                });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+
+                particles.forEach(p => {
+                    if (p.life > 0) {
+                        alive = true;
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.vy += 0.22;
+                        p.life -= 1.5;
+                        ctx.fillStyle = p.color;
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                });
+
+                if (alive) {
+                    requestAnimationFrame(animate);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+            animate();
+        }
+
+        // Add sample image if DB is completely empty on first launch
+        async function seedSampleDataIfEmpty() {
+            await initDB();
+            const existing = await loadPhotosFromDB();
+            if (existing.length === 0) {
+                // Generate cute SVG cartoon placeholder sample
+                const canvas = document.createElement('canvas');
+                canvas.width = 400;
+                canvas.height = 400;
+                const ctx = canvas.getContext('2d');
+                
+                ctx.fillStyle = '#F7EFE5';
+                ctx.fillRect(0, 0, 400, 400);
+                
+                ctx.fillStyle = '#C19A6B';
+                ctx.font = 'bold 24px "Plus Jakarta Sans", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('🎓 Tân Cử Nhân Xinh Đẹp!', 200, 180);
+                
+                ctx.font = '16px "Plus Jakarta Sans", sans-serif';
+                ctx.fillStyle = '#7B5232';
+                ctx.fillText('Hãy bấm "+ Tải Ảnh Lên" để lưu giữ kỷ niệm', 200, 220);
+
+                const sampleDataUrl = canvas.toDataURL();
+                await savePhotoToDB({
+                    id: 'sample_photo_1',
+                    dataUrl: sampleDataUrl,
+                    category: 'grad',
+                    caption: 'Ảnh mẫu kỷ niệm - Hãy tải những bức hình rạng rỡ của bạn lên nhé! ✨',
+                    timestamp: Date.now(),
+                    filename: 'Sample_Graduation.png',
+                    sizeKB: 25
+                });
+            }
+            refreshGallery();
+        }
+
+        window.onload = function() {
+            seedSampleDataIfEmpty();
+        };
+
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('confettiCanvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
